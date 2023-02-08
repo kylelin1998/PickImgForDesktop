@@ -6,9 +6,13 @@
 ## Introduction
 A free image hosting software. 
 So far, supports Github, and Imgur uploads. 
-Trigger action upload by global shortcut key.
+Trigger action upload by global shortcut key(Ctrl + Alt + U).
 
 Fast upload your image.
+
+软件下载地址:
+[Download-Github](https://github.com/kylelin1998/PickImgForDesktop/releases)
+[Download-Gitee](https://gitee.com/kylelin1998/PickImgForDesktop/releases)
 
 > NOTE： So far, temporarily does not support multiple images to upload, only supports Windows system to run this software. Maybe in the future will support Linux or MacOS systems.
 
@@ -60,3 +64,5 @@ Below is the software how to usage:
 
 **Imgur Settings:**
 * Client Id -> You can in <https://api.imgur.com/oauth2/addclient> to apply Client Id
+
+![d81c4747d51af548a80b25c8ed7eb00dcc264093.png](https://i.imgur.com/8IFk2sd.png)

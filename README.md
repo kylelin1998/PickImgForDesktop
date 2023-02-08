@@ -4,9 +4,13 @@
 [![release](https://img.shields.io/github/v/release/kylelin1998/PickImgForDesktop)](https://github.com/kylelin1998/PickImgForDesktop/releases/latest)
 
 ## 简介
-一款图床软件， 目前支持Github, Imgur图片上传， 通过全局快捷键触发上传动作
+一款图床软件， 目前支持Github, Imgur图片上传， 通过全局快捷键(Ctrl + Alt + U)触发上传动作
 
 快速上传你想上传的图片
+
+软件下载地址: 
+[下载地址-Github](https://github.com/kylelin1998/PickImgForDesktop/releases)
+[下载地址-Gitee](https://gitee.com/kylelin1998/PickImgForDesktop/releases)
 
 > 注意： 目前暂不支持多图片上传， 仅支持Windows系统， 在未来可能会支持Linux, MacOS系统的支持
 
@@ -58,3 +62,5 @@
 
 **Imgur设置:**
 * Client Id -> 你可以在 <https://api.imgur.com/oauth2/addclient> 申请Client Id
+
+![d81c4747d51af548a80b25c8ed7eb00dcc264093.png](https://i.imgur.com/8IFk2sd.png)
