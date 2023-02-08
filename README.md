@@ -8,11 +8,12 @@
 
 快速上传你想上传的图片
 
-软件下载地址: 
-[下载地址-Github](https://github.com/kylelin1998/PickImgForDesktop/releases)
-[下载地址-Gitee](https://gitee.com/kylelin1998/PickImgForDesktop/releases)
-
 > 注意： 目前暂不支持多图片上传， 仅支持Windows系统， 在未来可能会支持Linux, MacOS系统的支持
+
+软件下载地址:
+[下载地址-Github](https://github.com/kylelin1998/PickImgForDesktop/releases)
+[下载地址-码云](https://gitee.com/kylelin1998/PickImgForDesktop/releases)
+> 如果你是第一次下载使用软件请下载PickImg.For.Windows.universal.zip
 
 ## 关于
 我的Telegram: <https://t.me/KyleLin1998>

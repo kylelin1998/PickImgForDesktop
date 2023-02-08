@@ -10,11 +10,12 @@ Trigger action upload by global shortcut key(Ctrl + Alt + U).
 
 Fast upload your image.
 
-软件下载地址:
+> NOTE： So far, temporarily does not support multiple images to upload, only supports Windows system to run this software. Maybe in the future will support Linux or MacOS systems.
+
+Download list:
 [Download-Github](https://github.com/kylelin1998/PickImgForDesktop/releases)
 [Download-Gitee](https://gitee.com/kylelin1998/PickImgForDesktop/releases)
-
-> NOTE： So far, temporarily does not support multiple images to upload, only supports Windows system to run this software. Maybe in the future will support Linux or MacOS systems.
+> If you first download and use this software, please download PickImg.For.Windows.universal.zip file
 
 ## About
 My Telegram: <https://t.me/KyleLin1998>
