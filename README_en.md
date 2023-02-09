@@ -4,8 +4,8 @@
 [![release](https://img.shields.io/github/v/release/kylelin1998/PickImgForDesktop)](https://github.com/kylelin1998/PickImgForDesktop/releases/latest)
 
 ## Introduction
-A free image hosting software. 
-So far, supports Github, and Imgur uploads. 
+An open source and free-to-use image hosting software. 
+So far, supports Github, Imgur, and Alibaba Cloud OSS uploads. 
 Trigger action upload by global shortcut key(Ctrl + Alt + U).
 
 Fast upload your image.
@@ -49,8 +49,8 @@ Below is the software how to usage:
 * * ${timestamp} -> 13bit system timestamp base name
 * * ${md5} -> MD5 base name after encoding file bytes stream.
 * * ${sha1} -> SHA1 base name after encoding file bytes stream.
-* Copy Current Scheme -> support URL after upload to copy to the system clipboard
-* Copy Prompt For choose -> manual to choose which links type you uploaded
+* Copy Current Scheme -> Support URL after upload to copy to the system clipboard
+* Copy Prompt For choose -> Manual to choose which links type you uploaded
 * Prompt Before Upload To Confirm -> When you trigger the global shortcut key after will appear whether upload prompt. This feature avoid your personal information may be revealed.
 
 **You must click the 'Save Config' button to save if you changed the config**
@@ -65,5 +65,10 @@ Below is the software how to usage:
 
 **Imgur Settings:**
 * Client Id -> You can in <https://api.imgur.com/oauth2/addclient> to apply Client Id
+
+**Alibaba Cloud OSS**
+* Endpoint -> For example： oss-cn-hangzhou.aliyuncs.com
+* Object Name -> Image store path
+* Custom Domain -> For example： https://kylelin1998.com
 
 ![d81c4747d51af548a80b25c8ed7eb00dcc264093.png](https://i.imgur.com/8IFk2sd.png)

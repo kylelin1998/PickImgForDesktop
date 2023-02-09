@@ -4,7 +4,7 @@
 [![release](https://img.shields.io/github/v/release/kylelin1998/PickImgForDesktop)](https://github.com/kylelin1998/PickImgForDesktop/releases/latest)
 
 ## 简介
-一款图床软件， 目前支持Github, Imgur图片上传， 通过全局快捷键(Ctrl + Alt + U)触发上传动作
+开源图床软件， 目前支持Github, Imgur, Alibaba Cloud(阿里云)OSS图片上传， 通过全局快捷键(Ctrl + Alt + U)触发上传动作
 
 快速上传你想上传的图片
 
@@ -63,5 +63,10 @@
 
 **Imgur设置:**
 * Client Id -> 你可以在 <https://api.imgur.com/oauth2/addclient> 申请Client Id
+
+**Alibaba Cloud(阿里云)OSS**
+* Endpoint -> 例如： oss-cn-hangzhou.aliyuncs.com
+* Object Name -> 存储路径
+* Custom Domain -> 自定义域名， 例如： https://kylelin1998.com
 
 ![d81c4747d51af548a80b25c8ed7eb00dcc264093.png](https://i.imgur.com/8IFk2sd.png)
