@@ -149,6 +149,8 @@ public class SettingsWindow {
             }
 
             MessageUI.info(frame, I18nEnum.SaveSuccess.getText());
+
+            frame.dispose();
         });
     }
 

@@ -24,11 +24,11 @@ public class ClipboardUtil {
 
     @Data
     public static class Image {
-        public byte[] content;
-        public String extension;
-        public boolean hasExtension;
-        public String baseName;
-        public String name;
+        private byte[] content;
+        private String extension;
+        private boolean hasExtension;
+        private String baseName;
+        private String name;
 
         public static Image create() {
             return new Image();

@@ -72,6 +72,9 @@ public class ShortcutKey {
                         case Imgur:
                             imgurHandle(config, schemeItemEntity, image);
                             break;
+                        case AlibabaCloudOSS:
+                            alibabaCloudOSSHandle(config, schemeItemEntity, image);
+                            break;
                         default:
                             SystemTrayUI.warning(I18nEnum.ShortcutKeyWarning.getText());
                     }
@@ -93,7 +96,7 @@ public class ShortcutKey {
     }
 
     private static void githubHandle(SchemeConfig.SchemeEntity schemeEntity, SchemeConfig.SchemeItemEntity schemeItemEntity, ClipboardUtil.Image image) {
-        SchemeConfig.SchemeItemGithubSettingEntity github = schemeItemEntity.getGithub();
+        SchemeConfig.SchemeItemGithubSettingsEntity github = schemeItemEntity.getGithub();
         if (null == github) {
             SystemTrayUI.warning(I18nEnum.SetUpWarning.getText(schemeEntity.getCurrentScheme()));
             return;
@@ -135,7 +138,7 @@ public class ShortcutKey {
     }
 
     private static void imgurHandle(SchemeConfig.SchemeEntity schemeEntity, SchemeConfig.SchemeItemEntity schemeItemEntity, ClipboardUtil.Image image) {
-        SchemeConfig.SchemeItemImgurSettingEntity imgur  = schemeItemEntity.getImgur();
+        SchemeConfig.SchemeItemImgurSettingsEntity imgur  = schemeItemEntity.getImgur();
         if (null == imgur) {
             SystemTrayUI.warning(I18nEnum.SetUpWarning.getText(schemeEntity.getCurrentScheme()));
             return;
@@ -150,6 +153,52 @@ public class ShortcutKey {
             copy(schemeEntity, fileName, link);
         } else {
             SystemTrayUI.warning(I18nEnum.UploadFail.getText(fileName, "response status code: " + response.getStatus()));
+        }
+    }
+
+    private static void alibabaCloudOSSHandle(SchemeConfig.SchemeEntity schemeEntity, SchemeConfig.SchemeItemEntity schemeItemEntity, ClipboardUtil.Image image) {
+        SchemeConfig.SchemeItemAlibabaCloudOSSSettingsEntity oss = schemeItemEntity.getAlibabaCloudOSS();
+        if (null == oss) {
+            SystemTrayUI.warning(I18nEnum.SetUpWarning.getText(schemeEntity.getCurrentScheme()));
+            return;
+        }
+
+        String fileName = FileNameUtil.getCustomFileName(image.getContent(), schemeEntity.getFileNameRule().getRule(), image.getName());
+        SystemTrayUI.info(I18nEnum.Uploading.getText(fileName));
+
+        AlibabaCloudOSSUtil.UploadParameters uploadParameters = new AlibabaCloudOSSUtil.UploadParameters();
+        uploadParameters.setAccessKeyId(oss.getAccessKeyId());
+        uploadParameters.setAccessKeySecret(oss.getAccessKeySecret());
+        uploadParameters.setBucketName(oss.getBucketName());
+        uploadParameters.setContent(image.getContent());
+
+        String endpoint = oss.getEndpoint();
+        uploadParameters.setEndpoint(StringUtils.endsWith(endpoint, "/") ? StringUtils.removeEnd(endpoint, "/") : endpoint);
+        String objectName = oss.getObjectName();
+        if (StringUtils.startsWith(objectName, "/")) {
+            objectName = StringUtils.removeStart(objectName, "/");
+        }
+        if (StringUtils.endsWith(objectName, "/")) {
+            objectName = StringUtils.removeEnd(objectName, "/");
+        }
+        uploadParameters.setObjectName(objectName + "/" + fileName);
+
+        AlibabaCloudOSSUtil.UploadResponse response = AlibabaCloudOSSUtil.upload(RequestProxyConfig.getProxyConfig(schemeEntity), uploadParameters);
+        if (response.isOk()) {
+            String url = "";
+            String customDomain = oss.getCustomDomain();
+            if (StringUtils.endsWith(customDomain, "/")) {
+                customDomain = StringUtils.removeEnd(customDomain, "/");
+            }
+
+            if (StringUtils.isBlank(customDomain)) {
+                url = "https://" + uploadParameters.getBucketName() + "." + uploadParameters.getEndpoint() + "/" + uploadParameters.getObjectName();
+            } else {
+                url = customDomain + "/" + uploadParameters.getObjectName();
+            }
+            copy(schemeEntity, fileName, url);
+        } else {
+            SystemTrayUI.warning(I18nEnum.UploadFail.getText(fileName, "error msg: " + response.getErrorMessage()));
         }
     }
 

@@ -61,23 +61,31 @@ public class SchemeWindow {
         try {
             SchemeConfig.SchemeEntity schemeEntity = SchemeConfig.readConfig();
 
-            SchemeConfig.SchemeItemEntity schemeItemEntity = getSchemeItemEntity(schemeEntity.getItemList(), schemeEntity.getCurrentScheme());
+            SchemeConfig.SchemeItemEntity schemeItemEntity = getSchemeItemEntity(schemeEntity.getItemList(), schemeItemEnum.getName());
             switch (schemeItemEnum) {
                 case Github:
-                    SchemeConfig.SchemeItemGithubSettingEntity github = schemeItemEntity.getGithub();
+                    SchemeConfig.SchemeItemGithubSettingsEntity github = schemeItemEntity.getGithub();
                     if (null == github) {
-                        github = new SchemeConfig.SchemeItemGithubSettingEntity();
+                        github = new SchemeConfig.SchemeItemGithubSettingsEntity();
                         schemeItemEntity.setGithub(github);
                     }
                     renderFormByReflect(github, schemeEntity, panel, saveButton);
                     break;
                 case Imgur:
-                    SchemeConfig.SchemeItemImgurSettingEntity imgur = schemeItemEntity.getImgur();
+                    SchemeConfig.SchemeItemImgurSettingsEntity imgur = schemeItemEntity.getImgur();
                     if (null == imgur) {
-                        imgur = new SchemeConfig.SchemeItemImgurSettingEntity();
+                        imgur = new SchemeConfig.SchemeItemImgurSettingsEntity();
                         schemeItemEntity.setImgur(imgur);
                     }
                     renderFormByReflect(imgur, schemeEntity, panel, saveButton);
+                    break;
+                case AlibabaCloudOSS:
+                    SchemeConfig.SchemeItemAlibabaCloudOSSSettingsEntity alibabaCloudOSS = schemeItemEntity.getAlibabaCloudOSS();
+                    if (null == alibabaCloudOSS) {
+                        alibabaCloudOSS = new SchemeConfig.SchemeItemAlibabaCloudOSSSettingsEntity();
+                        schemeItemEntity.setAlibabaCloudOSS(alibabaCloudOSS);
+                    }
+                    renderFormByReflect(alibabaCloudOSS, schemeEntity, panel, saveButton);
                     break;
                 default:
                     break;
@@ -119,6 +127,7 @@ public class SchemeWindow {
             SchemeConfig.saveConfig(schemeEntity);
 
             MessageUI.info(frame, I18nEnum.SaveSuccess.getText());
+            frame.dispose();
         });
     }
 
