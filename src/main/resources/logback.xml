@@ -3,8 +3,8 @@
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
 
     <!-- 定义变量 -->
-    <property name="LOG_HOME" value="../log" />
-    <property name="APP_NAME" value="PickImg-For-Desktop"/>
+    <property name="LOG_HOME" value="./logs" />
+    <property name="APP_NAME" value="PickImgForDesktop"/>
 
     <contextName>${APP_NAME}</contextName>
 
