@@ -38,7 +38,7 @@ public class Config {
 
         File file = new File(CurrentPath);
         if (!file.exists()) {
-            System.out.println(file.mkdirs());;
+            file.mkdirs();
         }
     }
 
