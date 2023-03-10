@@ -32,6 +32,7 @@ public class SchemeWindow {
         renderAll();
 
         frame.pack();
+        frame.setAlwaysOnTop(true);
         frame.setVisible(true);
 
         return frame;

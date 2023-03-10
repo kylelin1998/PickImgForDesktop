@@ -3,6 +3,7 @@ package code.ui;
 import code.config.I18nEnum;
 import code.config.SchemeItemEnum;
 import code.util.ExceptionUtil;
+import code.util.PlatformUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -106,8 +107,9 @@ public class SystemTrayUI {
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == 1) {
                     SettingsWindow.render();
-                } else if (e.getButton() == 3 && e.isPopupTrigger()) {
+                } else if (e.getButton() == 3) {
                     jDialog.setLocation(e.getX() + 5, e.getY() - 5 - jPopupMenu.getHeight());
+
                     jDialog.setVisible(true);
                     jPopupMenu.show(jDialog, 0, 0);
                 }
@@ -124,13 +126,46 @@ public class SystemTrayUI {
 
     public static void info(String msg) {
         EventQueue.invokeLater(() -> {
-            trayIcon.displayMessage(I18nEnum.Title.getText(), msg, TrayIcon.MessageType.INFO);
+            PlatformUtil.Platform platform = PlatformUtil.getPlatform();
+            switch (platform) {
+                case Windows:
+                    trayIcon.displayMessage(I18nEnum.Title.getText(), msg, TrayIcon.MessageType.INFO);
+                    break;
+                case Mac:
+                    notificationForMacos("INFO - " + I18nEnum.Title.getText(), msg);
+                    break;
+                default:
+                    MessageUI.warning("Error...");
+                    break;
+            }
         });
     }
     public static void warning(String msg) {
         EventQueue.invokeLater(() -> {
-            trayIcon.displayMessage(I18nEnum.Title.getText(), msg, TrayIcon.MessageType.WARNING);
+            PlatformUtil.Platform platform = PlatformUtil.getPlatform();
+            switch (platform) {
+                case Windows:
+                    trayIcon.displayMessage(I18nEnum.Title.getText(), msg, TrayIcon.MessageType.WARNING);
+                    break;
+                case Mac:
+                    notificationForMacos("WARNING - " + I18nEnum.Title.getText(), msg);
+                    break;
+                default:
+                    MessageUI.warning("Error...");
+                    break;
+            }
         });
+    }
+
+    private static void notificationForMacos(String title, String text) {
+        String command = "display notification \"%s\" with title \"%s\"";
+        command = String.format(command, text, title);
+
+        try {
+            Runtime.getRuntime().exec(new String[]{"osascript", "-e", command});
+        } catch (IOException e) {
+            MessageUI.warning("Error...");
+        }
     }
 
 }

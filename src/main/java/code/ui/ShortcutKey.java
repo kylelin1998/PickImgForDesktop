@@ -35,8 +35,8 @@ public class ShortcutKey {
         }
         try {
             SchemeConfig.ShortcutKeyEntity shortcutKey = schemeEntity.getShortcutKey();
-            String format = String.format("%s %s %s", KeyEvent.getKeyText(shortcutKey.getModifiers()[0]).toLowerCase(), KeyEvent.getKeyText(shortcutKey.getModifiers()[1]).toLowerCase(), KeyEvent.getKeyText(shortcutKey.getKeycode()));
-            KeyStroke keyStroke = KeyStroke.getKeyStroke(format);
+//            String format = String.format("%s %s %s", KeyEvent.getKeyText(shortcutKey.getModifiers()[0]).toLowerCase(), KeyEvent.getKeyText(shortcutKey.getModifiers()[1]).toLowerCase(), KeyEvent.getKeyText(shortcutKey.getKeycode()));
+            KeyStroke keyStroke = KeyStroke.getKeyStroke(shortcutKey.getKeycode(), shortcutKey.getModifiers()[0] + shortcutKey.getModifiers()[1]);
             keyStrokeOnce = keyStroke;
             provider.register(keyStroke, (HotKey arg0) -> {
                 new Thread(() -> {

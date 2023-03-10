@@ -66,6 +66,14 @@ public class ProgramUtil {
     }
 
     public static void startup(String programBaseName, String programName) {
+        PlatformUtil.Platform platform = PlatformUtil.getPlatform();
+        switch (platform) {
+            case Mac:
+                return;
+            default:
+                break;
+        }
+
         File file = new File(System.getProperty("user.home") + StartupPath + "/" + programBaseName + ".lnk");
         if (file.exists()) {
             file.delete();

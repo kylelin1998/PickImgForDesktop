@@ -1,6 +1,7 @@
 package code.ui;
 
 import code.config.*;
+import code.util.PlatformUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +28,7 @@ public class SettingsWindow {
             }
         });
 
-        frame.setSize(400, 550);
+        frame.setSize(500, 650);
         ImageIcon img = new ImageIcon(SettingsWindow.class.getResource("icon.png"));
         frame.setIconImage(img.getImage());
         frame.setResizable(false);
@@ -36,6 +37,7 @@ public class SettingsWindow {
 
         renderAll();
 
+        frame.setAlwaysOnTop(true);
         frame.setVisible(true);
     }
 
@@ -82,6 +84,14 @@ public class SettingsWindow {
         });
 
         JComboBox startupFormComboField = createFormComboField(panel, I18nEnum.Startup.getText() + ": ", switchArray, schemeEntity.getStartup() ? 0 : 1);
+        PlatformUtil.Platform platform = PlatformUtil.getPlatform();
+        switch (platform) {
+            case Mac:
+                startupFormComboField.disable();
+                break;
+            default:
+                break;
+        }
 
         JComboBox currentSchemeFormComboField = createFormComboField(panel, I18nEnum.CurrentScheme.getText() + ": ", SchemeItemEnum.getNameArray(), SchemeItemEnum.getSchemeItemEnum(schemeEntity.getCurrentScheme()).ordinal());
 
@@ -148,7 +158,7 @@ public class SettingsWindow {
                 ProgramUI.cancelStartup();
             }
 
-            MessageUI.info(frame, I18nEnum.SaveSuccess.getText());
+            MessageUI.info(frame, Config.SchemeConfigPath + " " + I18nEnum.SaveSuccess.getText());
 
             frame.dispose();
         });

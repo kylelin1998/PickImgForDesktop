@@ -12,9 +12,13 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.*;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Slf4j
 public class ClipboardUtil {
@@ -39,6 +43,41 @@ public class ClipboardUtil {
         FileInputStream stream = new FileInputStream(file);
         return IOUtils.toByteArray(stream);
     }
+    public static BufferedImage getImage(java.awt.Image image) {
+        if(image instanceof BufferedImage) return (BufferedImage)image;
+        Lock lock = new ReentrantLock();
+        Condition size = lock.newCondition(), data = lock.newCondition();
+        ImageObserver o = (img, infoflags, x, y, width, height) -> {
+            lock.lock();
+            try {
+                if((infoflags&ImageObserver.ALLBITS)!=0) {
+                    size.signal();
+                    data.signal();
+                    return false;
+                }
+                if((infoflags&(ImageObserver.WIDTH|ImageObserver.HEIGHT))!=0)
+                    size.signal();
+                return true;
+            }
+            finally { lock.unlock(); }
+        };
+        BufferedImage bi;
+        lock.lock();
+        try {
+            int width, height=0;
+            while( (width=image.getWidth(o))<0 || (height=image.getHeight(o))<0 )
+                size.awaitUninterruptibly();
+            bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = bi.createGraphics();
+            try {
+                g.setBackground(new Color(0, true));
+                g.clearRect(0, 0, width, height);
+                while(!g.drawImage(image, 0, 0, o)) data.awaitUninterruptibly();
+            } finally { g.dispose(); }
+        } finally { lock.unlock(); }
+        return bi;
+    }
+
     private static byte[] toByteArray(BufferedImage bufferedImage) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, DefaultExtension, outputStream);
@@ -62,7 +101,8 @@ public class ClipboardUtil {
 
             dataFlavorAvailable = Clipboard.isDataFlavorAvailable(DataFlavor.imageFlavor);
             if (dataFlavorAvailable) {
-                BufferedImage bufferedImage = (BufferedImage) Clipboard.getData(DataFlavor.imageFlavor);
+                java.awt.Image bufferedImage = (java.awt.Image) Clipboard.getData(DataFlavor.imageFlavor);
+
                 String baseName = UUID.randomUUID().toString().replaceAll("-", "");
                 String name = baseName + "." + DefaultExtension;
 
@@ -71,7 +111,7 @@ public class ClipboardUtil {
                 image.setBaseName(baseName);
                 image.setExtension(DefaultExtension);
                 image.setHasExtension(true);
-                image.setContent(toByteArray(bufferedImage));
+                image.setContent(toByteArray(getImage(bufferedImage)));
                 return image;
             }
 
