@@ -1,15 +1,17 @@
 package code.ui;
 
 import code.config.*;
-import code.util.DownloadHelper;
-import code.util.GiteeUtil;
-import code.util.GithubUtil;
+import code.util.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
+@Slf4j
 public class UpgradeWindow {
 
     protected static JFrame frame = null;
@@ -66,13 +68,22 @@ public class UpgradeWindow {
 
             if (getVersionInt(targetVersion) > getVersionInt(Config.MetaData.CurrentVersion)) {
                 if (JOptionPane.showConfirmDialog(null,
-                        I18nEnum.CheckUpdateFound.getText(body, targetVersion), I18nEnum.Title.getText(),
+                        I18nEnum.CheckUpdateFound.getText(body, targetVersion), I18nEnum.Title.getText() + " - " + Config.MetaData.CurrentVersion,
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    render(config, targetVersion, download);
+                    if (PlatformUtil.isWindows()) {
+                        render(config, targetVersion, download);
+                    } else {
+                        try {
+                            Desktop.getDesktop().browse(new URI("https://github.com/kylelin1998/PickImgForDesktop/releases"));
+                        } catch (IOException | URISyntaxException ex) {
+                            log.error(ExceptionUtil.getStackTraceWithCustomInfoToStr(ex));
+                            MessageUI.warning(I18nEnum.Error.getText());
+                        }
+                    }
                 }
             } else {
-                MessageUI.warning(I18nEnum.CheckUpdateNewest.getText());
+                MessageUI.warning(I18nEnum.CheckUpdateNewest.getText() + " - " + Config.MetaData.CurrentVersion);
             }
         });
     }

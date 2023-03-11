@@ -2,7 +2,6 @@ package code.ui;
 
 import code.config.I18nEnum;
 import code.config.SchemeItemEnum;
-import code.util.ExceptionUtil;
 import code.util.PlatformUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,8 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,14 +42,7 @@ public class SystemTrayUI {
         JMenuItem aboutItem = new JMenuItem(I18nEnum.TrayAbout.getText());
         aboutItem.setName(I18nEnum.TrayAbout.getText());
         aboutItem.addActionListener((ActionEvent e) -> {
-            try {
-                Desktop.getDesktop().browse(new URI("https://kylelin1998.com/"));
-                Desktop.getDesktop().browse(new URI("https://github.com/kylelin1998/PickImgForDesktop"));
-                Desktop.getDesktop().browse(new URI("https://gitee.com/kylelin1998/PickImgForDesktop"));
-            } catch (IOException | URISyntaxException ex) {
-                log.error(ExceptionUtil.getStackTraceWithCustomInfoToStr(ex));
-                MessageUI.warning(I18nEnum.Error.getText());
-            }
+            AboutWindow.render();
         });
 
         JMenuItem settings = new JMenuItem(I18nEnum.TraySettings.getText());

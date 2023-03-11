@@ -9,9 +9,17 @@ public class Config {
     public static class MetaData {
         public final static String CurrentVersion = "1.1.0";
         public final static String ProcessBaseName = "PickImgForDesktop";
-        public final static String ProcessName = ProcessBaseName + ".exe";
+        public final static String ProcessName = PlatformUtil.isWindows() ? ProcessBaseName + ".exe" : ProcessBaseName;
         public final static String GitOwner = "kylelin1998";
         public final static String GitRepo = "PickImgForDesktop";
+    }
+
+    public static class AboutData {
+        public final static String GithubProjectUrl = "https://github.com/kylelin1998/PickImgForDesktop";
+        public final static String WebSite = "https://kylelin1998.com";
+        public final static String Channel = "https://t.me/KyleLin1998Channel";
+        public final static String Email = "email@kylelin1998.com";
+        public final static String Author = "kylelin1998";
     }
 
     public static String CurrentPath;
@@ -41,7 +49,5 @@ public class Config {
             file.mkdirs();
         }
     }
-
-
 
 }

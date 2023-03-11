@@ -19,7 +19,7 @@ public class SettingsWindow {
             return;
         }
 
-        frame = new JFrame(I18nEnum.Title.getText());
+        frame = new JFrame(I18nEnum.Title.getText() + " - " + Config.MetaData.CurrentVersion);
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -84,13 +84,8 @@ public class SettingsWindow {
         });
 
         JComboBox startupFormComboField = createFormComboField(panel, I18nEnum.Startup.getText() + ": ", switchArray, schemeEntity.getStartup() ? 0 : 1);
-        PlatformUtil.Platform platform = PlatformUtil.getPlatform();
-        switch (platform) {
-            case Mac:
-                startupFormComboField.disable();
-                break;
-            default:
-                break;
+        if (!PlatformUtil.isWindows()) {
+            startupFormComboField.disable();
         }
 
         JComboBox currentSchemeFormComboField = createFormComboField(panel, I18nEnum.CurrentScheme.getText() + ": ", SchemeItemEnum.getNameArray(), SchemeItemEnum.getSchemeItemEnum(schemeEntity.getCurrentScheme()).ordinal());

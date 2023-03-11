@@ -56,6 +56,13 @@ public enum I18nEnum {
     Startup("startup"),
     EmptyInputPrompt("emptyInputPrompt"),
 
+
+    GithubProjectUrl("githubProjectUrl"),
+    WebSite("webSite"),
+    Channel("channel"),
+    Email("email"),
+    Author("author"),
+
     ;
 
     private String key;

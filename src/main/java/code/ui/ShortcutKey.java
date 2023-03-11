@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ShortcutKey {
@@ -39,7 +40,7 @@ public class ShortcutKey {
             KeyStroke keyStroke = KeyStroke.getKeyStroke(shortcutKey.getKeycode(), shortcutKey.getModifiers()[0] + shortcutKey.getModifiers()[1]);
             keyStrokeOnce = keyStroke;
             provider.register(keyStroke, (HotKey arg0) -> {
-                new Thread(() -> {
+                EventQueue.invokeLater(() -> {
                     ClipboardUtil.Image image = ClipboardUtil.getImage();
                     if (null == image) {
                         SystemTrayUI.warning(I18nEnum.ClipboardNotFoundImage.getText());
@@ -56,6 +57,9 @@ public class ShortcutKey {
                         ImageIcon imageIcon = new ImageIcon(image.getContent());
                         Image newImg = imageIcon.getImage().getScaledInstance(160, 160,  java.awt.Image.SCALE_SMOOTH);
                         imageIcon = new ImageIcon(newImg);
+
+                        ProgramUtil.activate(Config.MetaData.ProcessName);
+
                         if (JOptionPane.showConfirmDialog(null,
                                 I18nEnum.PromptBeforeUploadInfo.getText(), I18nEnum.Title.getText(),
                                 JOptionPane.YES_NO_OPTION,
@@ -78,7 +82,7 @@ public class ShortcutKey {
                         default:
                             SystemTrayUI.warning(I18nEnum.ShortcutKeyWarning.getText());
                     }
-                }).start();
+                });
             });
         } catch (Exception e) {
             log.error(ExceptionUtil.getStackTraceWithCustomInfoToStr(e));
@@ -107,6 +111,9 @@ public class ShortcutKey {
             github.setPath("/" + path);
         } else if ("/".equals(path)) {
             github.setPath("");
+        }
+        if (path.endsWith("/")) {
+            github.setPath(StringUtils.remove(path, "/"));
         }
 
         String fileName = FileNameUtil.getCustomFileName(image.getContent(), schemeEntity.getFileNameRule().getRule(), image.getName());
@@ -206,6 +213,8 @@ public class ShortcutKey {
         SchemeConfig.CopyEntity copyEntity = schemeEntity.getCopy();
         CopyLinkEnum copyLinkEnum = CopyLinkEnum.getCopyLinkEnum(copyEntity.getCurrent());
         if (copyEntity.getIsPromptForChoose()) {
+            ProgramUtil.activate(Config.MetaData.ProcessName);
+
             String [] options = CopyLinkEnum.getAliasArray();
             int n =  JOptionPane.showOptionDialog(null, I18nEnum.MakeChoice.getText(), I18nEnum.Title.getText(), JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
             copyLinkEnum = CopyLinkEnum.getCopyLinkEnumByAlias(options[n]);
