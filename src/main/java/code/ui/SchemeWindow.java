@@ -60,76 +60,75 @@ public class SchemeWindow {
 
     private static void renderForm(JComponent panel, JButton saveButton) {
         try {
-            SchemeConfig.SchemeEntity schemeEntity = SchemeConfig.readConfig();
-
-            SchemeConfig.SchemeItemEntity schemeItemEntity = getSchemeItemEntity(schemeEntity.getItemList(), schemeItemEnum.getName());
-            switch (schemeItemEnum) {
-                case Github:
-                    SchemeConfig.SchemeItemGithubSettingsEntity github = schemeItemEntity.getGithub();
-                    if (null == github) {
-                        github = new SchemeConfig.SchemeItemGithubSettingsEntity();
-                        schemeItemEntity.setGithub(github);
-                    }
-                    renderFormByReflect(github, schemeEntity, panel, saveButton);
-                    break;
-                case Imgur:
-                    SchemeConfig.SchemeItemImgurSettingsEntity imgur = schemeItemEntity.getImgur();
-                    if (null == imgur) {
-                        imgur = new SchemeConfig.SchemeItemImgurSettingsEntity();
-                        schemeItemEntity.setImgur(imgur);
-                    }
-                    renderFormByReflect(imgur, schemeEntity, panel, saveButton);
-                    break;
-                case AlibabaCloudOSS:
-                    SchemeConfig.SchemeItemAlibabaCloudOSSSettingsEntity alibabaCloudOSS = schemeItemEntity.getAlibabaCloudOSS();
-                    if (null == alibabaCloudOSS) {
-                        alibabaCloudOSS = new SchemeConfig.SchemeItemAlibabaCloudOSSSettingsEntity();
-                        schemeItemEntity.setAlibabaCloudOSS(alibabaCloudOSS);
-                    }
-                    renderFormByReflect(alibabaCloudOSS, schemeEntity, panel, saveButton);
-                    break;
-                default:
-                    break;
+            Object entity = getSchemeItemEntity(SchemeConfig.readConfig());
+            for (Field field : entity.getClass().getDeclaredFields()) {
+                FieldAnnotation annotation = field.getAnnotation(FieldAnnotation.class);
+                if (null != annotation) {
+                    JTextField formTextField = createFormTextField(panel, annotation.required(),annotation.displayText() + ": ", (String) field.get(entity));
+                    fieldInputList.put(field.getName(), formTextField);
+                }
             }
+
+            saveButton.addActionListener((actionEvent) -> {
+                SchemeConfig.SchemeEntity schemeEntity = SchemeConfig.readConfig();
+                Object schemeItemEntity = getSchemeItemEntity(schemeEntity);
+
+                for (Field field : schemeItemEntity.getClass().getDeclaredFields()) {
+                    FieldAnnotation annotation = field.getAnnotation(FieldAnnotation.class);
+                    if (null != annotation) {
+                        JTextField jTextField = fieldInputList.get(field.getName());
+                        String text = jTextField.getText();
+                        if (annotation.required()) {
+                            if (StringUtils.isBlank(text)) {
+                                MessageUI.warning(frame, I18nEnum.EmptyInputPrompt.getText(annotation.displayText()));
+                                return;
+                            }
+                        }
+
+                        try {
+                            field.set(schemeItemEntity, text);
+                        } catch (IllegalAccessException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+                SchemeConfig.saveConfig(schemeEntity);
+
+                MessageUI.info(frame, I18nEnum.SaveSuccess.getText());
+                frame.dispose();
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void renderFormByReflect(Object o, SchemeConfig.SchemeEntity schemeEntity, JComponent panel, JButton saveButton) throws IllegalAccessException {
-        for (Field field : o.getClass().getDeclaredFields()) {
-            FieldAnnotation annotation = field.getAnnotation(FieldAnnotation.class);
-            if (null != annotation) {
-                JTextField formTextField = createFormTextField(panel, annotation.required(),annotation.displayText() + ": ", (String) field.get(o));
-                fieldInputList.put(field.getName(), formTextField);
-            }
-        }
-
-        saveButton.addActionListener((actionEvent) -> {
-            for (Field field : o.getClass().getDeclaredFields()) {
-                FieldAnnotation annotation = field.getAnnotation(FieldAnnotation.class);
-                if (null != annotation) {
-                    JTextField jTextField = fieldInputList.get(field.getName());
-                    String text = jTextField.getText();
-                    if (annotation.required()) {
-                        if (StringUtils.isBlank(text)) {
-                            MessageUI.warning(frame, I18nEnum.EmptyInputPrompt.getText(annotation.displayText()));
-                            return;
-                        }
-                    }
-
-                    try {
-                        field.set(o, text);
-                    } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e);
-                    }
+    private static Object getSchemeItemEntity(SchemeConfig.SchemeEntity schemeEntity) {
+        SchemeConfig.SchemeItemEntity schemeItemEntity = getSchemeItemEntity(schemeEntity.getItemList(), schemeItemEnum.getName());
+        switch (schemeItemEnum) {
+            case Github:
+                SchemeConfig.SchemeItemGithubSettingsEntity github = schemeItemEntity.getGithub();
+                if (null == github) {
+                    github = new SchemeConfig.SchemeItemGithubSettingsEntity();
+                    schemeItemEntity.setGithub(github);
                 }
-            }
-            SchemeConfig.saveConfig(schemeEntity);
-
-            MessageUI.info(frame, I18nEnum.SaveSuccess.getText());
-            frame.dispose();
-        });
+                return github;
+            case Imgur:
+                SchemeConfig.SchemeItemImgurSettingsEntity imgur = schemeItemEntity.getImgur();
+                if (null == imgur) {
+                    imgur = new SchemeConfig.SchemeItemImgurSettingsEntity();
+                    schemeItemEntity.setImgur(imgur);
+                }
+                return imgur;
+            case AlibabaCloudOSS:
+                SchemeConfig.SchemeItemAlibabaCloudOSSSettingsEntity alibabaCloudOSS = schemeItemEntity.getAlibabaCloudOSS();
+                if (null == alibabaCloudOSS) {
+                    alibabaCloudOSS = new SchemeConfig.SchemeItemAlibabaCloudOSSSettingsEntity();
+                    schemeItemEntity.setAlibabaCloudOSS(alibabaCloudOSS);
+                }
+                return alibabaCloudOSS;
+            default:
+                return null;
+        }
     }
 
     private static SchemeConfig.SchemeItemEntity getSchemeItemEntity(List<SchemeConfig.SchemeItemEntity> itemList, String name) {
