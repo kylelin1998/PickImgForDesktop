@@ -8,9 +8,9 @@ An open source and free-to-use image hosting software.
 So far, supports Github, Imgur, and Alibaba Cloud OSS uploads. 
 Trigger action upload by global shortcut key(Ctrl + Alt + U).
 
-Fast upload your image.
+Fast upload your image, and support Windows, and Macos to run.
 
-> NOTE： So far, temporarily does not support multiple images to upload, only supports Windows system to run this software. Maybe in the future will support Linux or MacOS systems.
+> NOTE： So far, temporarily does not support multiple images to upload.
 
 Download list:
 [Download-Github](https://github.com/kylelin1998/PickImgForDesktop/releases)

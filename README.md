@@ -6,14 +6,13 @@
 ## 简介
 开源图床软件， 目前支持Github, Imgur, Alibaba Cloud(阿里云)OSS图片上传， 通过全局快捷键(Ctrl + Alt + U)触发上传动作
 
-快速上传你想上传的图片
+快速上传你想上传的图片, 支持Windows、 Macos
 
-> 注意： 目前暂不支持多图片上传， 仅支持Windows系统， 在未来可能会支持Linux, MacOS系统的支持
+> 注意： 目前暂不支持多图片上传
 
 软件下载地址:
 [下载地址-Github](https://github.com/kylelin1998/PickImgForDesktop/releases)
 [下载地址-码云](https://gitee.com/kylelin1998/PickImgForDesktop/releases)
-> 如果你是第一次下载使用软件请下载PickImg.For.Windows.universal.zip
 
 ## 关于
 我的Telegram: <https://t.me/KyleLin1998>
