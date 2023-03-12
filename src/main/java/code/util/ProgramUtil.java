@@ -103,6 +103,17 @@ public class ProgramUtil {
         }
     }
 
+    public static void coverStartup(String programBaseName, String programName) {
+        if (!PlatformUtil.isWindows()) {
+            return;
+        }
+
+        File file = new File(System.getProperty("user.home") + StartupPath + "/" + programBaseName + ".lnk");
+        if (file.exists()) {
+            startup(programBaseName, programName);
+        }
+    }
+
     public static void startup(String programBaseName, String programName) {
         if (!PlatformUtil.isWindows()) {
             return;

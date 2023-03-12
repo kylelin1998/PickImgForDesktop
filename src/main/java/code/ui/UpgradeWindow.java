@@ -71,15 +71,21 @@ public class UpgradeWindow {
                         I18nEnum.CheckUpdateFound.getText(body, targetVersion), I18nEnum.Title.getText() + " - " + Config.MetaData.CurrentVersion,
                         JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    if (PlatformUtil.isWindows()) {
-                        render(config, targetVersion, download);
-                    } else {
-                        try {
-                            Desktop.getDesktop().browse(new URI("https://github.com/kylelin1998/PickImgForDesktop/releases"));
-                        } catch (IOException | URISyntaxException ex) {
-                            log.error(ExceptionUtil.getStackTraceWithCustomInfoToStr(ex));
-                            MessageUI.warning(I18nEnum.Error.getText());
-                        }
+//                    if (PlatformUtil.isWindows()) {
+//                        render(config, targetVersion, download);
+//                    } else {
+//                        try {
+//                            Desktop.getDesktop().browse(new URI("https://github.com/kylelin1998/PickImgForDesktop/releases"));
+//                        } catch (IOException | URISyntaxException ex) {
+//                            log.error(ExceptionUtil.getStackTraceWithCustomInfoToStr(ex));
+//                            MessageUI.warning(I18nEnum.Error.getText());
+//                        }
+//                    }
+                    try {
+                        Desktop.getDesktop().browse(new URI("https://github.com/kylelin1998/PickImgForDesktop/releases"));
+                    } catch (IOException | URISyntaxException ex) {
+                        log.error(ExceptionUtil.getStackTraceWithCustomInfoToStr(ex));
+                        MessageUI.warning(I18nEnum.Error.getText());
                     }
                 }
             } else {

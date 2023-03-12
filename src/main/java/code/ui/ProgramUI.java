@@ -17,7 +17,7 @@ public class ProgramUI {
 
     public static void init() {
         ProgramUtil.delete();
-
+        ProgramUtil.coverStartup(Config.MetaData.ProcessBaseName, Config.MetaData.ProcessName);
     }
 
     public static void restart() {
