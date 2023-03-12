@@ -7,7 +7,7 @@ import java.io.File;
 public class Config {
 
     public static class MetaData {
-        public final static String CurrentVersion = "1.1.0";
+        public final static String CurrentVersion = "1.1.2";
         public final static String ProcessBaseName = "PickImgForDesktop";
         public final static String ProcessName = PlatformUtil.isWindows() ? ProcessBaseName + ".exe" : ProcessBaseName;
         public final static String GitOwner = "kylelin1998";
