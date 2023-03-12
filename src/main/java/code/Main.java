@@ -35,7 +35,7 @@ public class Main {
         ShortcutKey.init(schemeEntity);
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            ShortcutKey.stop();
+            ShortcutKey.close();
         }));
     }
 }

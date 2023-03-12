@@ -32,9 +32,8 @@ public class ShortcutKey {
         });
     }
 
-    public static void stop() {
-        provider.unregister(keyStrokeOnce);
-        provider.stop();
+    public static void close() {
+        provider.close();
     }
 
     public static void register(SchemeConfig.SchemeEntity schemeEntity) {
