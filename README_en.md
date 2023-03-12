@@ -4,11 +4,11 @@
 [![release](https://img.shields.io/github/v/release/kylelin1998/PickImgForDesktop)](https://github.com/kylelin1998/PickImgForDesktop/releases/latest)
 
 ## Introduction
-An open source and free-to-use image hosting software. 
+An open-source and free-to-use image hosting software. 
 So far, supports Github, Imgur, and Alibaba Cloud OSS uploads. 
 Trigger action upload by global shortcut key(Ctrl + Alt + U).
 
-Fast upload your image, and support Windows, and Macos to run.
+Fast upload your image, and support Windows, and MacOS to run.
 
 > NOTE： So far, temporarily does not support multiple images to upload.
 
