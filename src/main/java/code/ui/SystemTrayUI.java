@@ -4,6 +4,7 @@ import code.config.I18nEnum;
 import code.config.SchemeItemEnum;
 import code.util.PlatformUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,7 +48,7 @@ public class SystemTrayUI {
 
         JMenuItem settings = new JMenuItem(I18nEnum.TraySettings.getText());
         settings.addActionListener((ActionEvent e) -> {
-            SettingsWindow.render();
+            SettingsWindow.render(true);
         });
         SchemeItemEnum[] schemeItemEnums = SchemeItemEnum.values();
         for (SchemeItemEnum schemeItemEnum : schemeItemEnums) {
@@ -91,12 +92,13 @@ public class SystemTrayUI {
         jPopupMenu.add(checkUpdateItem);
         jPopupMenu.add(restartItem);
         jPopupMenu.add(exitItem);
+        jPopupMenu.setVisible(false);
 
         trayIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton() == 1) {
-                    SettingsWindow.render();
+                    SettingsWindow.render(true);
                 } else if (e.getButton() == 3) {
                     jDialog.setLocation(e.getX() + 5, e.getY() - 5 - jPopupMenu.getHeight());
 
@@ -148,6 +150,8 @@ public class SystemTrayUI {
     }
 
     private static void notificationForMacos(String title, String text) {
+        text = StringUtils.replace(text, "\"", "");
+
         String command = "display notification \"%s\" with title \"%s\"";
         command = String.format(command, text, title);
 

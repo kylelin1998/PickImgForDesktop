@@ -21,13 +21,20 @@ public class ShortcutKey {
     private static KeyStroke keyStrokeOnce;
 
     public static void init(SchemeConfig.SchemeEntity schemeEntity) {
-        provider = Provider.getCurrentProvider(true);
-        provider.reset();
+        EventQueue.invokeLater(() -> {
+            provider = Provider.getCurrentProvider(true);
+            provider.reset();
 
-        SchemeConfig.ShortcutKeyEntity shortcutKey = schemeEntity.getShortcutKey();
-        if (shortcutKey.getEnable()) {
-            register(schemeEntity);
-        }
+            SchemeConfig.ShortcutKeyEntity shortcutKey = schemeEntity.getShortcutKey();
+            if (shortcutKey.getEnable()) {
+                register(schemeEntity);
+            }
+        });
+    }
+
+    public static void stop() {
+        provider.unregister(keyStrokeOnce);
+        provider.stop();
     }
 
     public static void register(SchemeConfig.SchemeEntity schemeEntity) {
@@ -171,7 +178,7 @@ public class ShortcutKey {
         }
 
         String fileName = FileNameUtil.getCustomFileName(image.getContent(), schemeEntity.getFileNameRule().getRule(), image.getName());
-        SystemTrayUI.info(I18nEnum.Uploading.getText(fileName));
+//        SystemTrayUI.info(I18nEnum.Uploading.getText(fileName));
 
         AlibabaCloudOSSUtil.UploadParameters uploadParameters = new AlibabaCloudOSSUtil.UploadParameters();
         uploadParameters.setAccessKeyId(oss.getAccessKeyId());

@@ -13,7 +13,7 @@ import java.util.List;
 public class SettingsWindow {
     protected static JFrame frame = null;
 
-    public static void render() {
+    public static void render(boolean visible) {
         if (null != frame) {
             frame.setVisible(true);
             return;
@@ -38,7 +38,7 @@ public class SettingsWindow {
         renderAll();
 
         frame.setAlwaysOnTop(true);
-        frame.setVisible(true);
+        frame.setVisible(visible);
     }
 
     private static void renderAll() {

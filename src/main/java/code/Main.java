@@ -2,10 +2,7 @@ package code;
 
 import code.config.I18nEnum;
 import code.config.SchemeConfig;
-import code.ui.MessageUI;
-import code.ui.ProgramUI;
-import code.ui.ShortcutKey;
-import code.ui.SystemTrayUI;
+import code.ui.*;
 import code.util.ExceptionUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +29,13 @@ public class Main {
 
         ProgramUI.init();
 
+        SettingsWindow.render(false);
         SystemTrayUI.render();
+
         ShortcutKey.init(schemeEntity);
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            ShortcutKey.stop();
+        }));
     }
 }
