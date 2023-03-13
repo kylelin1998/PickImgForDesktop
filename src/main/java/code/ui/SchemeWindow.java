@@ -80,7 +80,7 @@ public class SchemeWindow {
                         String text = jTextField.getText();
                         if (annotation.required()) {
                             if (StringUtils.isBlank(text)) {
-                                MessageUI.warning(frame, I18nEnum.EmptyInputPrompt.getText(annotation.displayText()));
+                                MessageUI.warning(null, I18nEnum.EmptyInputPrompt.getText(annotation.displayText()));
                                 return;
                             }
                         }
@@ -94,7 +94,7 @@ public class SchemeWindow {
                 }
                 SchemeConfig.saveConfig(schemeEntity);
 
-                MessageUI.info(frame, I18nEnum.SaveSuccess.getText());
+                MessageUI.info(null, I18nEnum.SaveSuccess.getText());
                 frame.dispose();
             });
         } catch (Exception e) {

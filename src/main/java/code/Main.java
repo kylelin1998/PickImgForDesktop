@@ -4,6 +4,7 @@ import code.config.I18nEnum;
 import code.config.SchemeConfig;
 import code.ui.*;
 import code.util.ExceptionUtil;
+import javafx.application.Platform;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.*;
@@ -33,6 +34,8 @@ public class Main {
         SystemTrayUI.render();
 
         ShortcutKey.init(schemeEntity);
+
+        SettingsWindowFx.render();
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             ShortcutKey.close();

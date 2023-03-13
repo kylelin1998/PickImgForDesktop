@@ -155,7 +155,7 @@ public class SettingsWindow {
                 ProgramUI.cancelStartup();
             }
 
-            MessageUI.info(frame, Config.SchemeConfigPath + " " + I18nEnum.SaveSuccess.getText());
+//            MessageUI.info(frame, Config.SchemeConfigPath + " " + I18nEnum.SaveSuccess.getText());
 
             frame.dispose();
         });

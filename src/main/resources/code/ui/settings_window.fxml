@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="607.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="code.ui.SettingsWindowController">
+   <children>
+      <Pane prefHeight="543.0" prefWidth="455.0" />
+      <TabPane prefHeight="607.0" prefWidth="455.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="test">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="570.0" prefWidth="455.0">
+                     <children>
+                        <Button fx:id="save" layoutX="160.0" layoutY="12.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="135.0" text="Button" />
+
+                        <Label fx:id="langLabel" layoutX="27.0" layoutY="77.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <ComboBox fx:id="langComboBox" layoutX="191.0" layoutY="73.0" prefWidth="150.0" />
+
+                        <Label fx:id="startupLabel" layoutX="27.0" layoutY="121.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <ComboBox fx:id="startupComboBox" layoutX="191.0" layoutY="117.0" prefWidth="150.0" />
+
+                        <Label fx:id="schemeLabel" layoutX="27.0" layoutY="163.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <ComboBox fx:id="schemeComboBox" layoutX="191.0" layoutY="158.0" prefWidth="150.0" />
+
+                        <Label fx:id="updateLabel" layoutX="27.0" layoutY="203.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <ComboBox fx:id="updateComboBox" layoutX="191.0" layoutY="199.0" prefHeight="25.0" prefWidth="151.0" />
+
+                        <Label fx:id="proxyLabel" layoutX="27.0" layoutY="243.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <ComboBox fx:id="proxyComboBox" layoutX="191.0" layoutY="243.0" prefHeight="25.0" prefWidth="151.0" />
+
+                        <Label fx:id="proxyHostLabel" layoutX="27.0" layoutY="286.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <TextField fx:id="proxyHostText" layoutX="191.0" layoutY="283.0" prefHeight="25.0" prefWidth="151.0" />
+
+                        <Label fx:id="proxyPortLabel" layoutX="27.0" layoutY="326.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <TextField fx:id="proxyPortText" layoutX="191.0" layoutY="323.0" prefHeight="25.0" prefWidth="151.0" />
+
+                        <Label fx:id="filenameLabel" layoutX="27.0" layoutY="366.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                        <TextField fx:id="filenameText" layoutX="191.0" layoutY="363.0" prefHeight="25.0" prefWidth="151.0" />
+
+                         <Label fx:id="copySchemeLabel" layoutX="27.0" layoutY="406.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                         <ComboBox fx:id="copySchemeComboBox" layoutX="191.0" layoutY="403.0" prefHeight="25.0" prefWidth="151.0" />
+
+                         <Label fx:id="copyPromptLabel" layoutX="27.0" layoutY="446.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                         <ComboBox fx:id="copyPromptComboBox" layoutX="191.0" layoutY="443.0" prefHeight="25.0" prefWidth="151.0" />
+
+                         <Label fx:id="promptBeforeUploadLabel" layoutX="27.0" layoutY="486.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                         <ComboBox fx:id="promptBeforeUploadComboBox" layoutX="191.0" layoutY="483.0" prefHeight="25.0" prefWidth="151.0" />
+
+                         <Label fx:id="shortcutKeyLabel" layoutX="27.0" layoutY="526.0" prefHeight="17.0" prefWidth="159.0" text="Label" />
+                         <ComboBox fx:id="shortcutKeyComboBox1" layoutX="191.0" layoutY="523.0" prefHeight="25.0" prefWidth="60.0" />
+                         <ComboBox fx:id="shortcutKeyComboBox2" layoutX="268.0" layoutY="523.0" prefHeight="25.0" prefWidth="60.0" />
+                         <ComboBox fx:id="shortcutKeyComboBox3" layoutX="342.0" layoutY="523.0" prefHeight="25.0" prefWidth="60.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

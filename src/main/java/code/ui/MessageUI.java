@@ -3,25 +3,38 @@ package code.ui;
 import code.config.Config;
 import code.config.I18nEnum;
 import code.util.ProgramUtil;
-
-import javax.swing.*;
-import java.awt.*;
+import javafx.scene.control.Alert;
+import javafx.stage.Window;
 
 public class MessageUI {
 
     public static void warning(String message) {
         warning(null, message);
     }
-    public static void warning(Component parentComponent, String message) {
+    public static void warning(Window window, String message) {
         ProgramUtil.activate(Config.MetaData.ProcessName);
-        JOptionPane.showMessageDialog(null, message, I18nEnum.Title.getText(), JOptionPane.WARNING_MESSAGE);
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(I18nEnum.Title.getText());
+        alert.setContentText(message);
+
+        alert.initOwner(window);
+
+        alert.showAndWait();
     }
     public static void info(String message) {
         info(null, message);
     }
-    public static void info(Component parentComponent, String message) {
+    public static void info(Window window, String message) {
         ProgramUtil.activate(Config.MetaData.ProcessName);
-        JOptionPane.showMessageDialog(parentComponent, message, I18nEnum.Title.getText(), JOptionPane.INFORMATION_MESSAGE);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(I18nEnum.Title.getText());
+        alert.setContentText(message);
+
+        alert.initOwner(window);
+
+        alert.showAndWait();
     }
 
 }
